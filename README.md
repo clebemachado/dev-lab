@@ -9,5 +9,4 @@ Aqui estão reunidos projetos que desenvolvo para praticar diferentes **stacks, 
 ## 🚀 Estrutura
 
 Cada diretório dentro deste repositório representa um **projeto de estudo independente**.  
-Os nomes seguem o padrão:  
 

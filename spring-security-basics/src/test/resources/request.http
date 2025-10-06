@@ -1,0 +1,22 @@
+### GET request test
+GET http://localhost:8080/test
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInN1YiI6ImNsZWJlckBlbWFpbC5jb20iLCJleHAiOjE3NTk3MTU2MzQsImlhdCI6MTc1OTcxMjAzNH0.J0HpJjRvvTDTcxW0pCslsDYp0twuyYnz5l4kMNZ4LB4
+###
+
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "name": "Cleber",
+  "email": "cleber@email.com",
+  "password": "12345678"
+}
+
+###
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+    "email": "cleber@email.com",
+    "password": "12345678"
+}
