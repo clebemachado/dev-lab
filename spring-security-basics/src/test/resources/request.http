@@ -3,12 +3,16 @@ GET http://localhost:8080/test
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInN1YiI6ImNsZWJlckBlbWFpbC5jb20iLCJleHAiOjE3NTk3MTU2MzQsImlhdCI6MTc1OTcxMjAzNH0.J0HpJjRvvTDTcxW0pCslsDYp0twuyYnz5l4kMNZ4LB4
 ###
 
+GET http://localhost:8080/user/admin/dashboard
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGVzIjpbIlJPTEVfQURNSU4iXSwib3BlcmF0aW9ucyI6WyJPUkRFUl9DUkVBVEUiLCJPUkRFUl9SRUFEIiwiVVNFUl9DUkVBVEUiLCJVU0VSX1JFQUQiXSwic3ViIjoiY2xlYmVyQGVtYWlsLmNvbSIsImV4cCI6MTc1OTc3Nzg5MiwiaWF0IjoxNzU5Nzc0MjkyfQ.6yz8m8PGMqAC0FbuJfwF9s1NM9VTPePIVK4ObGTsX30
+
+###
 POST http://localhost:8080/auth/register
 Content-Type: application/json
 
 {
   "name": "Cleber",
-  "email": "cleber@email.com",
+  "email": "cleber2@email.com",
   "password": "12345678"
 }
 

@@ -6,11 +6,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 
 @Component
@@ -36,7 +40,21 @@ public class SecurityFilter extends OncePerRequestFilter {
             if (optUser.isPresent()) {
                 JWTUserData jwtUserData = optUser.get();
                 // Cria o objeto de autenticação do Spring Security.
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(jwtUserData, null, null);
+                Collection<GrantedAuthority> authorities = new ArrayList<>();
+
+                if (jwtUserData.roles() != null) {
+                    authorities.addAll(jwtUserData.roles().stream()
+                            .map(SimpleGrantedAuthority::new)
+                            .toList());
+                }
+
+                if (jwtUserData.operations() != null) {
+                    authorities.addAll(jwtUserData.operations().stream()
+                            .map(SimpleGrantedAuthority::new)
+                            .toList());
+                }
+
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(jwtUserData, null, authorities);
 
                 // Coloca a autenticação no contexto do Spring Security, permitindo que o usuário seja identificado nas próximas chamadas.
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);

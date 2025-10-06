@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -19,15 +20,31 @@ import java.util.List;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String name;
     private String email;
     private String password;
 
+    @ManyToMany(fetch = FetchType.EAGER) // EAGER = carrega junto com o usuário
+    @JoinTable(
+            name = "user_roles", // tabela de ligação
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<Role> roles = new ArrayList<>();
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return roles.stream()
+                .flatMap(role -> {
+                    List<GrantedAuthority> authorities = new ArrayList<>();
+                    authorities.add(role);
+
+                    authorities.addAll(role.getAllowedOperations());
+                    return authorities.stream();
+                })
+                .toList();
     }
 
     @Override

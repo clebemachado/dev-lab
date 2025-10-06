@@ -44,6 +44,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorize -> authorize
                 // Permite que páginas de erro sejam acessadas sem autenticação
                 .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
+                .requestMatchers("/user/admin/**").hasRole("ADMIN")
+                .requestMatchers("/user/public/**").hasAuthority("USER_READ")
                 // Permite login sem autenticação
                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                 // Permite registro de usuário sem autenticação
